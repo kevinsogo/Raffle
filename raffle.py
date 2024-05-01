@@ -10,6 +10,7 @@ parser = ArgumentParser()
 parser.add_argument('data_source', type=Path)
 parser.add_argument('-w', '--winners', type=int, default=3)
 parser.add_argument('-d', '--duplicates-allowed', action='store_true')
+parser.add_argument('-p', '--pause', type=float, default=1)
 parser.add_argument('-btw', '--best-to-worst', action='store_true')
 
 args = parser.parse_args()
@@ -53,7 +54,7 @@ else:
 for candidate in winners:
     print(end="And the winner is..", flush=True)
     for it in range(3):
-        sleep(1)
+        sleep(args.pause)
         print(end='.', flush=True)
     input()
     print(f"{candidate}!", flush=True)
