@@ -7,6 +7,30 @@ from random import seed, shuffle
 from time import sleep
 
 
+def colored(text, *a, **kw):
+    return text
+
+try:
+    import colorama
+except ImportError: 
+    pass
+else:
+    colorama.init()
+    try:
+        from termcolor import colored
+    except ImportError:
+        pass
+
+
+def cprint(*args, sep=' ', end='\n', color=None, on_color=None, attrs=None, **kwargs) -> None:
+    print(ctext(*args, sep=sep, end=end, color=color, on_color=on_color, attrs=attrs), end='', **kwargs)
+
+
+def ctext(*args, sep=' ', end='', color=None, on_color=None, attrs=None) -> str:
+    text = sep.join(map(str, args)) + end
+    return colored(text, color=color, on_color=on_color, attrs=attrs)
+
+
 @dataclass
 class Data:
     scores: dict[str, int]
@@ -88,7 +112,7 @@ def main():
         if prize is not None:
             print(end="The next prize is... ", flush=True)
             input()
-            print(f"{prize}")
+            cprint(f"{prize}", color='blue')
 
         print(end="And the winner is..", flush=True)
 
@@ -96,7 +120,7 @@ def main():
             sleep(args.pause)
             print(end='.', flush=True)
         input()
-        print(f"{candidate}!", flush=True)
+        cprint(f"{candidate}!", flush=True, color='green')
         input()
 
     print()
